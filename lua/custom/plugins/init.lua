@@ -7,4 +7,38 @@ return {
     'ThePrimeagen/vim-be-good',
     cmd = 'VimBeGood',
   },
+  -- Formatting plugin
+  {
+    'stevearc/conform.nvim',
+    lazy = true,
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = function()
+      local conform = require 'conform'
+
+      conform.setup {
+        formatters_by_ft = {
+          -- Go: goimports adds/removes imports, gofumpt does strict formatting
+          go = { 'goimports', 'gofumpt' },
+
+          -- React / TypeScript / JSON
+          javascript = { 'biome', 'prettier' },
+          typescript = { 'biome', 'prettier' },
+          javascriptreact = { 'biome', 'prettier' },
+          typescriptreact = { 'biome', 'prettier' },
+          json = { 'biome', 'prettier' },
+
+          -- Lua
+          lua = { 'stylua' },
+        },
+
+        -- Auto format on save
+        format_on_save = {
+          lsp_fallback = true,
+          timeout_ms = 5000,
+        },
+
+        notify_on_error = true,
+      }
+    end,
+  },
 }

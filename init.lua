@@ -672,7 +672,27 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {
+          capabilities = capabilities,
+          on_attach = function(client, bufnr)
+            -- disable formatting if you're using an external formatter (like conform)
+            -- this prevents conflicts with goimports or gofumpt.
+            client.server_capabilities.documentformattingprovider = false
+            client.server_capabilities.documentrangeformattingprovider = false
+          end,
+          settings = {
+            gopls = {
+              gofumpt = true, -- 🔥 enable gofumpt inside gopls
+              staticcheck = true,
+              analyses = {
+                unusedparams = true,
+                shadow = true,
+              },
+              usePlaceholders = true,
+              completeUnimported = true,
+            },
+          },
+        },
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -716,6 +736,14 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        -- Go tools
+        'gopls', -- Go language server
+        'gofumpt', -- Go formatter
+        'goimports', -- Go import manager
+
+        -- TypeScript/React tools
+        'ts_ls', -- TypeScript language server
+        'biome', -- JS/TS/React formatter and linter
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -768,11 +796,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        go = { 'gofumpt' },
       },
     },
   },
@@ -984,7 +1008,7 @@ require('lazy').setup({
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!

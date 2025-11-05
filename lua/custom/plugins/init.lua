@@ -7,6 +7,16 @@ return {
     'ThePrimeagen/vim-be-good',
     cmd = 'VimBeGood',
   },
+  -- Claude Code integration
+  {
+    'coder/claudecode.nvim',
+    dependencies = { 'folke/snacks.nvim' },
+    config = true,
+    keys = {
+      { '<leader>ac', '<cmd>ClaudeCode<cr>', desc = 'Toggle Claude' },
+      { '<leader>af', '<cmd>ClaudeCodeFocus<cr>', desc = 'Focus Claude' },
+    },
+  },
   -- Formatting plugin
   {
     'stevearc/conform.nvim',

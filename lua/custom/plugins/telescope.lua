@@ -1,5 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
+  event = 'VimEnter',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
@@ -112,6 +113,27 @@ return {
         require('telescope.builtin').buffers()
       end,
       desc = '[ ] Find existing buffers',
+    },
+    {
+      '<leader>gs',
+      function()
+        require('telescope.builtin').git_status()
+      end,
+      desc = '[G]it [S]tatus (modified files)',
+    },
+    {
+      '<leader>gc',
+      function()
+        require('telescope.builtin').git_commits()
+      end,
+      desc = '[G]it [C]ommits (history)',
+    },
+    {
+      '<leader>gb',
+      function()
+        require('telescope.builtin').git_branches()
+      end,
+      desc = '[G]it [B]ranches',
     },
   },
   config = function()

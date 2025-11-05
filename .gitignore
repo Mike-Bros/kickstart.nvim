@@ -7,7 +7,7 @@ spell/
 lazy-lock.json
 
 # gravity.nvim: Manifest overrides (deep merge for dependencies/metadata)
-# manifest.overrides.json
+manifest.overrides.json
 
 # gravity.nvim: Config file overrides (file replacement for configs)
 # README.md is tracked to explain usage, but actual override files are ignored

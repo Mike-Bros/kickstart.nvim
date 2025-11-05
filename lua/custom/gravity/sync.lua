@@ -95,16 +95,24 @@ function M.detect_change_type(config_key, config_file, manifest)
     end
   end
 
-  -- Check if unchanged (all match)
-  if source_hash == system_hash and source_hash == prev.source_hash then
-    return 'unchanged'
-  end
-
   -- Detect what changed since last sync
   local source_changed = (source_hash ~= prev.source_hash)
   local system_changed = (system_hash ~= prev.system_hash)
 
-  -- Three-way detection
+  -- Check if files are currently identical
+  if source_hash == system_hash then
+    -- Files match now, but check if state is stale
+    if source_changed or system_changed then
+      -- Files are identical but state needs updating
+      -- Sync will update state without copying files
+      return 'source_changed' -- Safe to sync (no overwrite risk)
+    else
+      -- Files match and state is current
+      return 'unchanged'
+    end
+  end
+
+  -- Files differ - check three-way detection
   if source_changed and system_changed then
     return 'conflict'
   elseif source_changed then

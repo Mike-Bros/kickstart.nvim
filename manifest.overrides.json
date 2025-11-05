@@ -1,0 +1,18 @@
+{
+  "_comment": "Machine-specific manifest overrides - this file is gitignored",
+  "_comment2": "Use deep merge to override specific fields in manifest.json",
+  "_comment3": "Format version must match manifest.json for compatibility",
+  "_comment4": "",
+  "_comment5": "Example - Override Node version:",
+  "_comment6": "  \"dependencies\": { \"languages\": { \"node\": \"16\" } }",
+  "_comment7": "",
+  "_comment8": "Example - Add extra system package:",
+  "_comment9": "  \"dependencies\": { \"system_packages\": [\"htop\"] }",
+  "_comment10": "",
+  "_comment11": "For dotfile overrides (entire file replacement):",
+  "_comment12": "  Copy file to dotfiles.overrides/ instead (e.g., dotfiles.overrides/.gitconfig)",
+  "_comment13": "",
+  "_comment14": "Only add fields you want to override - empty uses all defaults",
+
+  "version": "1.0.0"
+}

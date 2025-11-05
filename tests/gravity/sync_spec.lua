@@ -27,6 +27,16 @@ local function write_test_file(path, content)
   end
 end
 
+local function read_test_file(path)
+  local file = io.open(path, 'r')
+  if file then
+    local content = file:read('*all')
+    file:close()
+    return content
+  end
+  return nil
+end
+
 local function create_test_manifest(test_dir, configs)
   local manifest = {
     version = '1.0.0',
@@ -346,6 +356,53 @@ describe('gravity.nvim sync', function()
       -- Check state
       local state = sync.load_state()
       assert.is_true(state.dotfiles['test.conf'].used_override)
+    end)
+  end)
+
+  describe('force flag', function()
+    it('should sync system_changed files when force=true', function()
+      -- Setup
+      write_test_file(test_dir .. '/configs/test.conf', 'original content')
+      write_test_file(test_dir .. '/manifest.json', [[
+{
+  "version": "1.0.0",
+  "configs": {
+    "test.conf": {
+      "source": "configs/test.conf",
+      "target": "~/.test.conf"
+    }
+  }
+}
+]])
+
+      -- Initial sync
+      local manifest = manifest_lib.load()
+      local config = manifest.configs['test.conf']
+      sync.sync_file('test.conf', config, manifest, { no_backup = true, quiet = true })
+
+      -- Verify initial sync
+      local system_path = test_dir .. '/home/.test.conf'
+      assert.is_true(utils.file_exists(system_path))
+      assert.are.equal('original content', read_test_file(system_path))
+
+      -- Modify system file (simulate local changes)
+      write_test_file(system_path, 'locally modified content')
+
+      -- Try sync_all without force (should skip)
+      local result_no_force = sync.sync_all({ quiet = true })
+      assert.are.equal(0, result_no_force.synced)
+      assert.are.equal(1, result_no_force.skipped)
+
+      -- Verify system file unchanged
+      assert.are.equal('locally modified content', read_test_file(system_path))
+
+      -- Try sync_all with force=true (should sync)
+      local result_with_force = sync.sync_all({ quiet = true, force = true })
+      assert.are.equal(1, result_with_force.synced)
+      assert.are.equal(0, result_with_force.skipped)
+
+      -- Verify system file was overwritten with source
+      assert.are.equal('original content', read_test_file(system_path))
     end)
   end)
 end)

@@ -3,6 +3,16 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  -- gravity.nvim: Smart dotfile sync
+  {
+    name = 'gravity.nvim',
+    dir = vim.fn.stdpath 'config' .. '/lua/custom/gravity',
+    config = function()
+      require('custom.gravity').setup()
+    end,
+    lazy = false,
+    priority = 100,
+  },
   {
     'ThePrimeagen/vim-be-good',
     cmd = 'VimBeGood',

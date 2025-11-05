@@ -239,3 +239,50 @@ sudo pacman -S --noconfirm --needed gcc make git ripgrep fd unzip neovim
 ```
 </details>
 
+---
+
+## Custom Additions to This Fork
+
+### gravity.nvim
+
+This fork includes **gravity.nvim**, an intelligent config file sync plugin with three-way conflict detection and machine-specific overrides.
+
+**What it does:**
+- Syncs config files from `~/.config/nvim/configs/` to system locations
+- Tracks changes on both repo and system sides using SHA256 hashes
+- Detects conflicts and prevents accidental overwrites
+- Supports machine-specific overrides via `configs.overrides/`
+- Works with any file type: dotfiles, agent prompts, scripts, docs
+
+**Quick start:**
+
+```vim
+" Check sync status
+:GravityStatus
+
+" Interactive sync workflow
+:GravitySync
+
+" View diff for specific file
+:GravityDiff .bashrc
+```
+
+**Features:**
+- 7 status states tracked (unchanged, source_changed, system_changed, conflict, etc.)
+- Interactive menus with colored output
+- Automatic backups before overwriting
+- Comprehensive test coverage (14 tests)
+- AI bootstrap agent integration for environment provisioning
+
+**Full Documentation:**
+
+All documentation, usage guides, testing details, and architecture information available at:
+
+**https://sao.bros.ninja/projects/gravity/**
+
+Quick links:
+- [Usage Guide & Features](https://sao.bros.ninja/projects/gravity/)
+- [Testing Documentation](https://sao.bros.ninja/projects/gravity/testing/)
+- [Project Plan](https://sao.bros.ninja/projects/gravity/plan/)
+- [Bootstrap Agent](https://sao.bros.ninja/projects/gravity/bootstrap-agent-prompt/)
+

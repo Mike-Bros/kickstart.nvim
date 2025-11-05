@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+
+  "dependencies": {
+    "system_packages": [
+      "build-essential",
+      "git",
+      "curl",
+      "tmux",
+      "ripgrep",
+      "fzf"
+    ],
+    "languages": {
+      "go": "1.25.3",
+      "node": "18"
+    },
+    "tools": [
+      "docker",
+      "neovim"
+    ]
+  },
+
+  "configs": {
+    ".bashrc": {
+      "source": "configs/.bashrc",
+      "target": "~/.bashrc"
+    },
+    ".bash_aliases": {
+      "source": "configs/.bash_aliases",
+      "target": "~/.bash_aliases"
+    },
+    ".tmux.conf": {
+      "source": "configs/.tmux.conf",
+      "target": "~/.tmux.conf"
+    },
+    ".gitmux.conf": {
+      "source": "configs/.gitmux.conf",
+      "target": "~/.gitmux.conf"
+    },
+    ".gitconfig": {
+      "source": "configs/.gitconfig",
+      "target": "~/.gitconfig"
+    },
+    "bootstrap-agent": {
+      "source": "configs/bootstrap-agent-prompt.md",
+      "target": "~/.claude/agents/bootstrap-agent-prompt.md"
+    }
+  }
+}

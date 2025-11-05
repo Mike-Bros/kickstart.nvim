@@ -1,3 +1,5 @@
 [user]
-	name = Mike Bros
+    name = Mike-Bros
 	email = 9326825+Mike-Bros@users.noreply.github.com
+[url "git@github.com:"]
+	insteadOf = https://github.com/

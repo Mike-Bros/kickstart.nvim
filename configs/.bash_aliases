@@ -2,6 +2,23 @@
 alias vim=nvim
 alias vi=nvim
 
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
 # Git shortcuts
 alias gs='git status'
 alias ga='git add'
@@ -21,6 +38,11 @@ alias dimg='docker images'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+
+# Generate secure keys for Docker services
+alias keygen='openssl rand -hex 32'
+alias makekey='openssl rand -hex 32'
+alias secretkey='openssl rand -hex 32'
 
 # Nginx management
 alias el7='sudo nvim /etc/nginx/sites-available/default'
